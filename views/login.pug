@@ -1,0 +1,23 @@
+extends ./base/baselogin
+block vars
+    - var tittle = "Login"
+block body
+    .container.mlogin
+      #login
+        h1 Ingreso al sistema
+        form#loginform(name='loginform', action='/usuario/login', method='POST')
+          p
+            label(for='user_login')
+              | Usuario
+              br
+              input#username.input(type='text', name='username', value='', size='20')
+          p
+            label(for='user_pass')
+              | Contraseña
+              br
+              input#password.input(type='password', name='password', value='', size='20')
+          p.submit
+            input.button(type='submit', name='login', value='Ingresar')
+      if(rows)
+        h1 rows
+

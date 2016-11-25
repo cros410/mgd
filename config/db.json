@@ -1,0 +1,27 @@
+{
+    "mode": "dev",
+    "pro": {
+        "host": "216.198.218.183",
+        "user": "mgd2015_manager",
+        "pwd": "esy?FPQy!Fqu",
+        "database": "mgd2015_usuarios",
+        "port": 3306,
+        "pool": 5
+    },
+    "dev": {
+        "host": "127.0.0.1",
+        "user": "root",
+        "pwd": "root",
+        "database": "mgd2015_usuarios",
+        "port": 3307,
+        "pool": 5
+    },
+    "test": {
+        "host": "127.0.0.1",
+        "user": "root",
+        "pwd": "root",
+        "database": "mgd2015_usuarios",
+        "port": 3306,
+        "pool": 5
+    }
+}
