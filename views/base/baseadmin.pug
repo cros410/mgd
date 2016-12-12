@@ -5,28 +5,41 @@ html
     title
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(href='css/bootstrap.css', rel='stylesheet', type='text/css')
-    script(src='js/jquery.min.js')
-    link(href='css/theme-style.css', rel='stylesheet', type='text/css')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    script(type='application/x-javascript').
-      addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
-    link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css', integrity='sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi', crossorigin='anonymous')
+    link(href='../css/admin.css', rel='stylesheet', type='text/css')
     script.
-      $(function() {
-        var pull 		= $('#pull');
-        menu 		= $('nav ul');
-        menuHeight	= menu.height();
-        $(pull).on('click', function(e) {
-        e.preventDefault();
-        menu.slideToggle();
-        });
-        $(window).resize(function(){
-        var w = $(window).width();
-        if(w > 320 && menu.is(':hidden')) {
-        menu.removeAttr('style');
-        }
-        });
-      });
+      function validarn(e) {
+          tecla = (document.all) ? e.keyCode : e.which;
+          if (tecla == 8) return true;
+          if (tecla == 9) return true;
+          if (tecla == 11) return true;
+          patron = /[0-9]/; // 4
+          te = String.fromCharCode(tecla);
+          return patron.test(te);
+      }
   body
+    nav.navbar.navbar-dark.bg-primary
+      button.navbar-toggler.hidden-sm-up(type='button', data-toggle='collapse', data-target='#exCollapsingNavbar2', aria-controls='exCollapsingNavbar2', aria-expanded='false', aria-label='Toggle navigation')
+      #exCollapsingNavbar2.collapse.navbar-toggleable-xs
+        a.navbar-brand(href='#') M2
+        ul.nav.navbar-nav
+          li.nav-item
+            a.nav-link(href='#')
+              | Home 
+              span.sr-only (current)
+          li.nav-item.dropdown
+            a#supportedContentDropdown.nav-link.dropdown-toggle(href='http://example.com', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Dropdown
+            .dropdown-menu(aria-labelledby='supportedContentDropdown')
+              a.dropdown-item(href='#') Action
+              a.dropdown-item(href='#') Another action
+              a.dropdown-item(href='#') Something else here
+          li.nav-item
+            a.nav-link(href='#') Features
+          li.nav-item
+            a.nav-link(href='#') Pricing
+          li.nav-item
+            a.nav-link(href='#') About
     block body
+    script(src='https://code.jquery.com/jquery-3.1.1.js', integrity='sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=', crossorigin='anonymous')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js', integrity='sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK', crossorigin='anonymous')
+    script(src='../js/validator.js')

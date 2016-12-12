@@ -1,12 +1,18 @@
 'use strict';
 const express = require("express");
-const usuario = express.Router();
-const ctrUsuario = require("../controllers/admin");
+const admin = express.Router();
+const ctrAdmin = require("../controllers/admin");
 
 
-usuario.route("/usuario")
-    .get(ctrUsuario.select2);
-    
+admin.route("/")
+    .get(ctrAdmin.select2)
+    .post(ctrAdmin.regUser);
 
+admin.route("/usuarios")
+    .get(ctrAdmin.addUser);
 
-module.exports=usuario;
+admin.route("/test")
+    .post(ctrAdmin.regUser)
+    .put(ctrAdmin.resDescarga);
+
+module.exports = admin;
