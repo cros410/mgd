@@ -1,8 +1,31 @@
 .pad_50{
     padding: 50px;
-    
+}
+
+.mar_top_50{
+    margin-top: 20px;
+}
+
+.material-icons{
+    color: #0275d8;    
+}
+
+.especial_material-icons{
+    color: white !important;    
 }
 
 .help-block{
     color:#d9534f;
+}
+
+.floating{
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    height: 50px;
+    background-color: #0275d8 !important;
+}
+
+td {
+    vertical-align: text-top !important;
 }

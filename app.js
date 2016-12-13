@@ -22,6 +22,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.get("/err",(req,res)=>{
+  res.render("err");
+});
 app.use('/usuario', usuario);
 app.use('/admin', admin);
 

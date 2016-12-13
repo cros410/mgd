@@ -2,30 +2,11 @@ extends ./base/baseadmin
 block vars
     - var tittle = "Login"
 block body
-  #home.header
-    .container
-      .logo
-        a(href='#')
-          img(src='images/logoo.png', title='minimal')
-      nav.top-nav
-        ul.top-nav
-          li.active
-            a(href='index.html') Inicio
-            span  
-          li.page-scroll
-            a(href='index1.html') Datos
-            span  
-          li.page-scroll
-            a(href='index2.html') Facturas
-            span  
-          li.page-scroll
-            a(href='index3.html') Antivirus
-        a#pull(href='#')
-          img(src='images/nav-icon.png', title='menu')
-    .container
+  button#btnAddMasc.floating.mdl-button.mdl-js-button.mdl-button--fab.mdl-js-ripple-effect.mdl-button--colored
+    i.material-icons.especial_material-icons add
+  .container.pad_50
       .row
-        a.btn.btn-primary(href='create.php') Agregar
-        table.table.table-striped.table-bordered
+        table.table.table-striped.table-bordered.mar_top_50
           thead
             tr
               th Nombre
@@ -33,14 +14,23 @@ block body
               th # Descargas
               th Opción
           tbody
-            tr
-              td Diego
-              td diego@gmail.com
-              td 5
-              td(width='250')
-                a.btn(href='')
-                  span.glyphicon.glyphicon-search(aria-hidden='true')
-                a.btn(href='')
-                  span.glyphicon.glyphicon-refresh(aria-hidden='true')
-                a.btn(href='')
-                  span.glyphicon.glyphicon-trash(aria-hidden='true')
+              if data
+                each us in data.usuarios
+                  tr
+                    td= us.nombre
+                    td= us.correo
+                    td= us.desc
+                    td(width='250')
+                      a.btn(href='/admin/action?id='+us.idusuarios+'&action=1')
+                          i.material-icons visibility
+                      a.btn(href='/admin/action?id='+us.idusuarios+'&action=2')
+                        i.material-icons cached
+                      a.btn.delete
+                        i.material-icons(valid=us.idusuarios) delete_forever
+                      a.btn.state
+                        if (us.onair == 0)
+                          i.material-icons(onair="0" valid=us.idusuarios) check_box_outline_blank
+                        else
+                          i.material-icons(onair="1" valid=us.idusuarios) check_box
+                      
+

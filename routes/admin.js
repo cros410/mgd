@@ -8,8 +8,12 @@ admin.route("/")
     .get(ctrAdmin.select2)
     .post(ctrAdmin.regUser);
 
+admin.route("/action")
+    .get(ctrAdmin.showAction)
+    .put(ctrAdmin.changeState);
+
 admin.route("/usuarios")
-    .get(ctrAdmin.addUser);
+    .get(ctrAdmin.showListUsuario);
 
 admin.route("/test")
     .post(ctrAdmin.regUser)
