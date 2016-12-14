@@ -26,6 +26,10 @@
     background-color: #0275d8 !important;
 }
 
+mar_left{
+    margin-left: 50px;
+}
+
 td {
     vertical-align: text-top !important;
 }

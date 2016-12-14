@@ -1,0 +1,59 @@
+extends ./base/baseadmin
+block vars
+    - var tittle = "Login"
+block body
+  .container.pad_50
+    .col-md-6
+      form(data-toggle='validator', role='form' , method="POST", action="/admin/usuario")
+        input(type="hidden" value=usuario.idusuarios name="idusuarios")
+        .form-group.has-feedback
+          label.form-control-label Nombre
+          input.form-control.form-control-danger(type='text', required='' , name="nombre" , value=usuario.nombre )
+        .form-group.has-feedback
+          label.form-control-label DNI / RUC
+          input.form-control.form-control-danger(type='text', required='', value=usuario.dni , name="dni" , onkeypress="return validarn(event)")
+        .form-group.has-feedback
+          label.form-control-label Dirección
+          input.form-control.form-control-danger(type='text',  name="direc", value=usuario.direc ,  required='')
+        .form-group.has-feedback
+          label.form-control-label Distrito
+          input.form-control.form-control-danger(type='text', required='', value=usuario.distrito , name="distrito")
+        .form-group.has-feedback
+          label.form-control-label Celular
+          input.form-control.form-control-danger(type='text', required='' , name="celular" , value=usuario.celular , onkeypress="return validarn(event)")
+        .form-group.has-feedback
+          label.form-control-label Teléfono
+          input.form-control.form-control-danger(type='text', required='' , value=usuario.telefono, name="telefono", onkeypress="return validarn(event)")
+        .form-group.has-feedback
+          label.form-control-label Correo
+          input.form-control.form-control-danger(type='email',  name="correo", value=usuario.correo , data-error='Ingresar un correo válido', required='')
+          .help-block.with-errors
+        .form-group.has-feedback
+          label.form-control-label Plan
+          input.form-control.form-control-danger(type='text', name="plan", value=usuario.plan, required='')
+        .form-group.has-feedback
+          label.form-control-label Megas
+          input.form-control.form-control-danger(type='text' , name="megas", value=usuario.megas, required='')
+        .form-group
+          label.form-control-label Estado
+          if(usuario.onair==1)
+            .radio
+            label
+              input(type='radio', name='onair', value="1",required='' checked="checked")
+              |                             Activo
+            .radio
+            label
+              input(type='radio', name='onair', value="0")
+              |                             No activo
+          else
+            .radio
+            label
+              input(type='radio', name='onair', value="0" )
+              |                             Activo
+            .radio
+            label
+              input(type='radio', name='onair', value="0",required='' checked="checked")
+              |                             No activo
+            
+        .form-group
+          button.btn.btn-primary(type='submit') Actualizar
