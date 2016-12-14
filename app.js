@@ -8,7 +8,7 @@ const connection = require("./bd/conecction");
 
 const usuario = require('./routes/usuario');
 const admin = require('./routes/admin');
-
+const base = require("./routes/index");
 const app = express();
 
 // view engine setup
@@ -27,6 +27,7 @@ app.get("/err",(req,res)=>{
 });
 app.use('/usuario', usuario);
 app.use('/admin', admin);
+app.use('/login',base);
 
 //console.log(connection);
 

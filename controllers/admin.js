@@ -3,6 +3,8 @@ const getConnection = require("../bd/conecction");
 const log = require("../log/log");
 const fs = require('fs');
 const download = require('download');
+const sendMail = require("../suport/sendMail");
+const random = require("../suport/randomcode");
 
 function select2(req, res) {
     res.render("login");
@@ -18,6 +20,9 @@ function regUser(req, res) {
         if (err) {
             res.send({ cod: 0, msg: err.code });
         } else {
+            var codran = random.getRandomCode();
+            var us = req.body;
+            us.pwd = codran;
             con.query('INSERT INTO usuarios SET ?', req.body, function (err, result) {
                 if (err) {
                     log.ferror(err);
@@ -32,7 +37,17 @@ function regUser(req, res) {
                             res.send({ cod: 0, msg: err.code });
                     }
                 } else {
-                    res.redirect('/admin/usuarios');
+                    var user = {};
+                    user.name = req.body.nombre;
+                    user.codigo = codran;
+                    user.usermail = req.body.correo;
+                    sendMail.sendMailRegistro(user, (err, data) => {
+                        if (err) {
+                            res.send({ cod: 0, err: err, msg: "Error envio de mensaje" });
+                        } else {
+                            res.redirect('/admin/usuarios');
+                        }
+                    });
                 }
                 con.release();
             });
@@ -182,6 +197,8 @@ function downloadFile(req, res) {
         }
     });
 }
+
+
 //Soporte
 function getArrayFromObject(obj) {
     return [obj["nombre"], obj["dni"], obj["direc"], obj["distrito"], obj["celular"],
@@ -206,12 +223,15 @@ function getLine(obj) {
         + "\t" + obj.desc + "\t" + obj.dete;
 }
 
-function getFirstLine(){
-    return  "NOMBRE" + "\t" + "DNI" + "\t" + "DIRECCION" + "\t" + "DISTRITO" + "\t" + "CELULAR" + "\t"
-            + "TELEFONO" + "\t" + "CORREO" + "\t" + "PLAN" + "\t" + "MEGAS" + "\t" + "DISPONIBLE" + "\t" 
-            + "CANT. DESCARGAS " + "\t" + "FECHA REGISTRO" + "\t"
+function getFirstLine() {
+    return "NOMBRE" + "\t" + "DNI" + "\t" + "DIRECCION" + "\t" + "DISTRITO" + "\t" + "CELULAR" + "\t"
+        + "TELEFONO" + "\t" + "CORREO" + "\t" + "PLAN" + "\t" + "MEGAS" + "\t" + "DISPONIBLE" + "\t"
+        + "CANT. DESCARGAS " + "\t" + "FECHA REGISTRO" + "\t"
 }
+//
 
+
+// Descar el reporte de lista de usuarios
 function downlodReport(req, res) {
     getConnection(function (err, con) {
         if (err) {
@@ -227,7 +247,7 @@ function downlodReport(req, res) {
                             if (err) throw err;
                             var logger = fs.appendFile('public/files/usuarios.xls', data, (err) => {
                                 if (err) throw err;
-                                res.send({cod:1 , msg : "Archivo listo"});
+                                res.send({ cod: 1, msg: "Archivo listo" });
                             });
                         });
                     });

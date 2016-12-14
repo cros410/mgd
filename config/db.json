@@ -6,7 +6,11 @@
         "pwd": "esy?FPQy!Fqu",
         "database": "mgd2015_usuarios",
         "port": 3306,
-        "pool": 5
+        "pool": 5,
+        "mail": {
+            "email": "",
+            "pwd": ""
+        }
     },
     "dev": {
         "host": "127.0.0.1",
@@ -14,7 +18,11 @@
         "pwd": "root",
         "database": "mgd2015_usuarios",
         "port": 3307,
-        "pool": 5
+        "pool": 5,
+        "mail": {
+            "email": "servicioulimarket@gmail.com",
+            "pwd": "ulimarket2016"
+        }
     },
     "test": {
         "host": "127.0.0.1",
@@ -22,6 +30,10 @@
         "pwd": "root",
         "database": "mgd2015_usuarios",
         "port": 3306,
-        "pool": 5
+        "pool": 5,
+        "mail": {
+            "email": "",
+            "pwd": ""
+        }
     }
 }
