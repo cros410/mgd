@@ -1,15 +1,21 @@
 const express = require('express');
+const session = require('express-session');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const connection = require("./bd/conecction");
+const passport = require('passport');
+const flash = require('connect-flash');
 
 const usuario = require('./routes/usuario');
 const admin = require('./routes/admin');
-const base = require("./routes/index");
 const app = express();
+
+//require passport
+require('./bd/passport')(passport);
+//***************
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,24 +28,35 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.get("/err",(req,res)=>{
+
+// required for passport
+app.use(session({
+  secret: 'vidyapathaisalwaysrunning',
+  resave: true,
+  saveUninitialized: true
+})); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+
+app.get("/err", (req, res) => {
   res.render("err");
 });
 app.use('/usuario', usuario);
 app.use('/admin', admin);
-app.use('/login',base);
-
+require("./routes/index.js")(app, passport);
 //console.log(connection);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
