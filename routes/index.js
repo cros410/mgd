@@ -43,9 +43,9 @@ module.exports = function (app, passport) {
     });
 
     app.get('/logout', function (req, res) {
-		req.logout();
-		res.send("Salio");
-	});
+        req.logout();
+        res.send("Salio");
+    });
 };
 
 function isLoggedIn(req, res, next) {

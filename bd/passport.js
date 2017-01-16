@@ -27,12 +27,12 @@ module.exports = function (passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function (user, done) {
-        done(null, user.id);
+        done(null, user.dni);
     });
 
     // used to deserialize the user
     passport.deserializeUser(function (id, done) {
-        connection.query("SELECT * FROM usuarios WHERE id = ? ", [id], function (err, rows) {
+        connection.query("SELECT * FROM usuarios WHERE dni = ? ", [id], function (err, rows) {
             done(err, rows[0]);
         });
     });
@@ -70,9 +70,13 @@ module.exports = function (passport) {
                         var insertQuery = "INSERT INTO usuarios ( dni, pwd ) values (?,?)";
 
                         connection.query(insertQuery, [newUserMysql.dni, newUserMysql.pwd], function (err, rows) {
-                            newUserMysql.id = rows.insertId;
+                            if (err) {
+                                console.log("ERR : " + err);
+                            } else {
+                                newUserMysql.id = rows.insertId;
 
-                            return done(null, newUserMysql);
+                                return done(null, newUserMysql);
+                            }
                         });
                     }
                 });
@@ -94,19 +98,23 @@ module.exports = function (passport) {
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
             function (req, username, password, done) { // callback with email and password from our form
-                connection.query("SELECT * FROM usuarios WHERE dni = ?", [username], function (err, rows) {
-                    if (err)
+                console.log(username);
+                console.log(password);
+                connection.query("SELECT * FROM usuarios WHERE dni = ? ", [username], function (err, rows) {
+                    if (err) {
                         return done(err);
-                    if (!rows.length) {
-                        return done(null, false, req.flash('loginMessage', 'Usuario no registrado')); // req.flash is the way to set flashdata using connect-flash
+                    } else {
+                        if (!rows.length) {
+                            return done(null, false, req.flash('loginMessage', 'Usuario no registrado')); // req.flash is the way to set flashdata using connect-flash
+                        } else {
+                            if (!bcrypt.compareSync(password, rows[0].pwd)) {
+                                return done(null, false, req.flash('loginMessage', 'Contraseña equivocada')); // create the loginMessage and save it to session as flashdata
+                            } else {
+                                // all is well, return successful user
+                                return done(null, rows[0]);
+                            }
+                        }
                     }
-
-                    // if the user is found but the password is wrong
-                    if (!bcrypt.compareSync(password, rows[0].password))
-                        return done(null, false, req.flash('loginMessage', 'Contraseña equivocada')); // create the loginMessage and save it to session as flashdata
-
-                    // all is well, return successful user
-                    return done(null, rows[0]);
                 });
             })
     );
