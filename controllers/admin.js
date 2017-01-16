@@ -60,7 +60,7 @@ function showListUsuario(req, res) {
         if (err) {
             res.send({ cod: 0, msg: err.code });
         } else {
-            con.query("SELECT * from usuarios", function (err, rows, fields) {
+            con.query("SELECT * from usuarios where tipo <> 1", function (err, rows, fields) {
                 if (err) {
                     log.ferror(err);
                     res.send({ cod: 0, msg: err.code });

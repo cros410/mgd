@@ -54,30 +54,35 @@ module.exports = function (passport) {
             function (req, username, password, done) {
                 // find a user whose email is the same as the forms email
                 // we are checking to see if the user trying to login already exists
-                connection.query("SELECT * FROM usuarios WHERE dni = ?", [username], function (err, rows) {
-                    if (err)
+                connection.query("SELECT * FROM usuarios WHERE dni = ? ", [username], function (err, rows) {
+                    if (err) {
                         return done(err);
-                    if (rows.length) {
-                        return done(null, false, req.flash('signupMessage', 'Ya se registro este DNI'));
                     } else {
-                        // if there is no user with that username
-                        // create the user
-                        var newUserMysql = {
-                            dni: username,
-                            pwd: bcrypt.hashSync(password, null, null)  // use the generateHash function in our user model
-                        };
-
-                        var insertQuery = "INSERT INTO usuarios ( dni, pwd ) values (?,?)";
-
-                        connection.query(insertQuery, [newUserMysql.dni, newUserMysql.pwd], function (err, rows) {
-                            if (err) {
-                                console.log("ERR : " + err);
-                            } else {
-                                newUserMysql.id = rows.insertId;
-
-                                return done(null, newUserMysql);
-                            }
-                        });
+                        if (rows.length) {
+                            return done(null, false, req.flash('signupMessage', 'Ya se registro este DNI'));
+                        } else {
+                            var newUserMysql = {
+                                dni: username,
+                                pwd: bcrypt.hashSync(password, null, null),  // use the generateHash function in our user model
+                                nombre: req.body.nombre,
+                                direc: req.body.direc,
+                                distrito: req.body.distrito,
+                                celular: req.body.celular,
+                                telefono: req.body.telefono,
+                                correo: req.body.correo,
+                                plan: req.body.plan,
+                                megas: req.body.megas
+                            };
+                            var insertQuery = "INSERT INTO usuarios SET ? ";
+                            connection.query(insertQuery, newUserMysql , function (err, rows) {
+                                if (err) {
+                                    console.log("ERR : " + err);
+                                } else {
+                                    newUserMysql.id = rows.insertId;
+                                    return done(null, newUserMysql);
+                                }
+                            });
+                        }
                     }
                 });
             })
@@ -98,8 +103,6 @@ module.exports = function (passport) {
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
             function (req, username, password, done) { // callback with email and password from our form
-                console.log(username);
-                console.log(password);
                 connection.query("SELECT * FROM usuarios WHERE dni = ? ", [username], function (err, rows) {
                     if (err) {
                         return done(err);

@@ -3,6 +3,15 @@ const express = require("express");
 const admin = express.Router();
 const ctrAdmin = require("../controllers/admin");
 
+//Middleware to validate user auth
+admin.use(function auth(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.redirect("/login");
+    }
+});
+
 
 
 admin.route("/usuarios")
@@ -23,7 +32,7 @@ admin.route("/usuario") //Ejecutar acciones del crud
 admin.route("/download") //Ejecutar descargas 
     .post(ctrAdmin.downloadFile)
     .get(ctrAdmin.downlodReport);
-    
+
 
 
 

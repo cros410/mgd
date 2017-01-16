@@ -5,19 +5,22 @@ block body
     .container.mlogin
       #login
         h1 Ingreso al sistema
-        form#loginform(name='loginform', action='/usuario/login', method='POST')
+        
+        if messages.length
+          p=messages
+        form#loginform(action='/login' method='POST')
           p
-            label(for='user_login')
-              | Usuario
+            label
+              | DNI
               br
-              input#username.input(type='text', name='username', value='', size='20')
+              input.input(type='text' name='dni')
           p
-            label(for='user_pass')
+            label
               | Contraseña
               br
-              input#password.input(type='password', name='password', value='', size='20')
+              input.input(type='password' name='pwd')
           p.submit
-            input.button(type='submit', name='login', value='Ingresar')
+            input.button(type='submit' value='Ingresar')
       
       
 

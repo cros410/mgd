@@ -26,7 +26,7 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('secret'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
@@ -43,6 +43,8 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 app.get("/err", (req, res) => {
   res.render("err");
 });
+
+
 app.use('/usuario', usuario);
 app.use('/admin', admin);
 require("./routes/index.js")(app, passport);
