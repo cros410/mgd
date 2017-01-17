@@ -1,5 +1,5 @@
 {
-    "mode": "dev",
+    "mode": "test",
     "pro": {
         "host": "216.198.218.183",
         "user": "mgd2015_manager",
@@ -10,7 +10,8 @@
         "mail": {
             "email": "",
             "pwd": ""
-        }
+        },
+        "link":""
     },
     "dev": {
         "host": "127.0.0.1",
@@ -22,18 +23,20 @@
         "mail": {
             "email": "servicioulimarket@gmail.com",
             "pwd": "ulimarket2016"
-        }
+        },
+        "link":"http://localhost:3000"
     },
     "test": {
-        "host": "127.0.0.1",
-        "user": "root",
-        "pwd": "root",
+        "host": "216.198.218.183",
+        "user": "mgd2015_manager",
+        "pwd": "esy?FPQy!Fqu",
         "database": "mgd2015_usuarios",
         "port": 3306,
         "pool": 5,
         "mail": {
-            "email": "",
-            "pwd": ""
-        }
+            "email": "servicioulimarket@gmail.com",
+            "pwd": "ulimarket2016"
+        },
+        "link":"https://mg-trading.herokuapp.com"
     }
 }

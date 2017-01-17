@@ -5,6 +5,7 @@ const config = require("../config/db.json");
 const mode = config.mode;
 const db = config[mode];
 const correo = db.mail.email;
+const link = db.link;
 const pwd = db.mail.pwd;
 const transporter = nodemailer.createTransport('smtps://' + correo + ':' + pwd + '@smtp.gmail.com');
 
@@ -14,10 +15,6 @@ function sendMailRegistro(data, done) {
     var nombre = data.name;
     var codigo = data.codigo;
     var usermail = data.usermail;
-    console.log("correo : " + correo);
-    console.log("pwd : " + pwd);
-    console.log("usermail: " + usermail);
-
     var mailGenerator = new Mailgen({
         theme: 'salted',
         product: {
@@ -40,7 +37,7 @@ function sendMailRegistro(data, done) {
                 button: {
                     color: '#0275d8',
                     text: 'Ingresar',
-                    link: ''
+                    link: link + "/signup?id=" + data.dni
                 }
             }
             ,

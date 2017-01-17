@@ -41,6 +41,7 @@ function regUser(req, res) {
                     user.name = req.body.nombre;
                     user.codigo = codran;
                     user.usermail = req.body.correo;
+                    user.dni = req.body.dni;
                     sendMail.sendMailRegistro(user, (err, data) => {
                         if (err) {
                             res.send({ cod: 0, err: err, msg: "Error envio de mensaje" });

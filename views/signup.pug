@@ -1,0 +1,31 @@
+extends ./base/baselogin
+block vars
+    - var tittle = "signup"
+block body
+    .container.mlogin
+      #login
+        h1 Cambiar su contraseña
+        if messages
+            if messages.length
+            p=messages
+        form#loginform(action='/signup' method='POST')
+          p
+            label
+              | DNI
+              br
+              input.input(type='text' name='dni' value=usuario readonly)
+          p
+            label
+              | Código
+              br
+              input.input(type='text' name='code')    
+          p
+            label
+              | Contraseña
+              br
+              input.input(type='password' name='pwd')
+          p.submit
+            input.button(type='submit' value='Registrar')
+      
+      
+

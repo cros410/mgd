@@ -54,28 +54,23 @@ module.exports = function (passport) {
             function (req, username, password, done) {
                 // find a user whose email is the same as the forms email
                 // we are checking to see if the user trying to login already exists
-                connection.query("SELECT * FROM usuarios WHERE dni = ? ", [username], function (err, rows) {
+                var codigo = req.body.code;
+                console.log(codigo);
+                connection.query("SELECT * FROM usuarios WHERE dni = ? and pwd = ? ", [username, codigo], function (err, rows) {
                     if (err) {
                         return done(err);
                     } else {
                         if (rows.length) {
-                            return done(null, false, req.flash('signupMessage', 'Ya se registro este DNI'));
+                            return done(null, false, req.flash('signupMessage', 'Credeciales no válidas'));
                         } else {
                             var newUserMysql = {
                                 dni: username,
                                 pwd: bcrypt.hashSync(password, null, null),  // use the generateHash function in our user model
-                                nombre: req.body.nombre,
-                                direc: req.body.direc,
-                                distrito: req.body.distrito,
-                                celular: req.body.celular,
-                                telefono: req.body.telefono,
-                                correo: req.body.correo,
-                                plan: req.body.plan,
-                                megas: req.body.megas
                             };
-                            var insertQuery = "INSERT INTO usuarios SET ? ";
-                            connection.query(insertQuery, newUserMysql , function (err, rows) {
+                            var updateQuery = "UPDATE usuarios SET pwd = ? , estado = ?  WHERE dni = ? and estado = ? ";
+                            connection.query(updateQuery, [newUserMysql.pwd, 1, newUserMysql.dni, 2], function (err, rows) {
                                 if (err) {
+                                    return done(err);
                                     console.log("ERR : " + err);
                                 } else {
                                     newUserMysql.id = rows.insertId;
@@ -110,11 +105,20 @@ module.exports = function (passport) {
                         if (!rows.length) {
                             return done(null, false, req.flash('loginMessage', 'Usuario no registrado')); // req.flash is the way to set flashdata using connect-flash
                         } else {
-                            if (!bcrypt.compareSync(password, rows[0].pwd)) {
-                                return done(null, false, req.flash('loginMessage', 'Contraseña equivocada')); // create the loginMessage and save it to session as flashdata
+                            if (rows[0].estado === 2) {
+                                return done(null, false, req.flash('loginMessage', 'Cuenta aun no validada'));
                             } else {
-                                // all is well, return successful user
-                                return done(null, rows[0]);
+
+                                if (rows[0].onair === 1) {
+                                    if (!bcrypt.compareSync(password, rows[0].pwd)) {
+                                        return done(null, false, req.flash('loginMessage', 'Contraseña equivocada')); // create the loginMessage and save it to session as flashdata
+                                    } else {
+                                        // all is well, return successful user
+                                        return done(null, rows[0]);
+                                    }
+                                } else {
+                                    return done(null, false, req.flash('loginMessage', 'Usuario no disponible'));
+                                }
                             }
                         }
                     }

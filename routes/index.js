@@ -1,4 +1,5 @@
-'use strict';
+'use strict'
+const ctrlIndex = require("../controllers/index");
 module.exports = function (app, passport) {
 
     // Middleware solo para login
@@ -43,15 +44,14 @@ module.exports = function (app, passport) {
         }
     });
     //Show Register user page
-    app.get('/signup', function (req, res) {
-        res.send("mostrar registro ");
-    });
+    app.get('/signup', ctrlIndex.showSignup);
     //Register a user
-    app.post('/signup', passport.authenticate('local-signup', {
+    /*app.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/profile', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
-    }));
+    }));*/
+    app.post('/signup', ctrlIndex.Signup);
     //Sing out a user
     app.get('/logout', function (req, res) {
         req.logout();
