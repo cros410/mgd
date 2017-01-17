@@ -2,7 +2,6 @@
 const getConnection = require("../bd/conecction");
 const log = require("../log/log");
 const fs = require('fs');
-const download = require('download');
 const sendMail = require("../suport/sendMail");
 const random = require("../suport/randomcode");
 
