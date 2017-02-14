@@ -33,9 +33,6 @@ admin.route("/download") //Ejecutar descargas
     .post(ctrAdmin.downloadFile)
     .get(ctrAdmin.downlodReport);
 
-
-
-
 admin.route("/")
     .get(ctrAdmin.select2)
     .post(ctrAdmin.regUser);

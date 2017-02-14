@@ -1,4 +1,3 @@
 NOMBRE	DNI	DIRECCION	DISTRITO	CELULAR	TELEFONO	CORREO	PLAN	MEGAS	DISPONIBLE	CANT. DESCARGAS 	FECHA REGISTRO	
-Antonio	47728951	Calle zamora 211 	Surco	123456789	3216549	cros410@gmail.com	-	-	1	0	Mon Jan 16 2017 10:52:01 GMT-0500 (Hora est. Pacífico, Sudamérica)
-Christian	47728952	Pacasmayo 536	Callao	987654321	4567891	20122284@aloe.ulima.edu.pe	Plan3	100	1	5	Mon Jan 16 2017 14:37:23 GMT-0500 (Hora est. Pacífico, Sudamérica)
-Cesar	47728953	Casa	Lince	741852963	7531598	cesar@gmail.com	Plan2	100	null	5	Mon Jan 16 2017 15:00:37 GMT-0500 (Hora est. Pacífico, Sudamérica)
+Antonio	47728951	Calle zamora 211 	Surco	123456789	3216549	cros410@gmail.comm	-	-	1	0	Mon Jan 16 2017 10:52:01 GMT-0500 (Hora est. Pacífico, Sudamérica)
+Antonio	1234567	Av. japrado	San borja	12334534	23424	cros410@gmail.com	sdfs	d234	1	5	Tue Jan 17 2017 17:44:14 GMT-0500 (Hora est. Pacífico, Sudamérica)

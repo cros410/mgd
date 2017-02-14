@@ -60,7 +60,12 @@ function Signup(req, res) {
 
 }
 
+function showLogin(req, res) {
+    res.render("login");
+}
+
 module.exports = {
     showSignup,
-    Signup
+    Signup,
+    showLogin
 }

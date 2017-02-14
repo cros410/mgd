@@ -3,19 +3,14 @@ const session = require('express-session');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const connection = require("./bd/conecction");
-const passport = require('passport');
 const flash = require('connect-flash');
 
 const usuario = require('./routes/usuario');
 const admin = require('./routes/admin');
+const index = require('./routes/index');
 const app = express();
 
-//require passport
-require('./bd/passport')(passport);
-//***************
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,8 +42,7 @@ app.get("/err", (req, res) => {
 
 app.use('/usuario', usuario);
 app.use('/admin', admin);
-require("./routes/index.js")(app, passport);
-//console.log(connection);
+app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
